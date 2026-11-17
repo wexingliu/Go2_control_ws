@@ -62,12 +62,12 @@ ros2 launch unitree_guide_controller gazebo.launch.py pkg_description:=go2_descr
 
 ### 3.4 Go2 real robot
 
-Connect the computer to the robot over Ethernet. The real robot launch defaults to DDS domain `0`, interface `enp5s0`, and the SDK2 libraries installed at `/tmp/quadruped_unitree_sdk2_install/lib`.
+Connect the computer to the robot over Ethernet. The real robot launch defaults to DDS domain `0` and interface `enp5s0`. The MuJoCo target defaults to domain `1` and loopback interface `lo`. Match these settings to your simulator or robot; they are independent of `ROS_DOMAIN_ID`.
 
 ```bash
-source /opt/ros/humble/setup.bash
-source ~/dog/quadruped_ros2_control/install/setup.bash
-ros2 launch unitree_guide_controller real_robot.launch.py
+source /opt/ros/jazzy/setup.bash
+source ~/00u2/Go2_control_ws/install/setup.bash
+ros2 launch unitree_guide_controller real_robot.launch.py network_interface:=enp5s0
 ```
 
 The launch starts the hardware interface, state broadcasters, guide controller, then keyboard input. Press `2` once to begin the fixed-down transition, then press `2` again after about 1.5 seconds to enter fixed stand. Press `1` to return to passive mode. Keep the robot supported while first checking the controller and joint feedback.
@@ -75,5 +75,7 @@ The launch starts the hardware interface, state broadcasters, guide controller, 
 Override the DDS settings or SDK library directory when needed:
 
 ```bash
-ros2 launch unitree_guide_controller real_robot.launch.py domain:=0 network_interface:=enp5s0 sdk_library_path:=/tmp/quadruped_unitree_sdk2_install/lib
+ros2 launch unitree_guide_controller real_robot.launch.py domain:=0 network_interface:=enp5s0
+# For a custom SDK library directory, use the direct real-robot launch:
+ros2 launch unitree_guide_controller real_robot.launch.py sdk_library_path:=/path/to/sdk/lib
 ```
