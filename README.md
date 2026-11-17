@@ -8,6 +8,7 @@ Go2 四足 ROS 2 控制工作区。源码位于 `src/quadruped_ros2_control/`，
 |---|---|
 | `master` | 原始源代码（上游 `quadruped_ros2_control` @ a808acb，未修改） |
 | `main` | 修改后的代码：本机跑通真机控制所需的改动 |
+| `unitree_guide` | 在 main 的基础上新增 ROS 2 与 Go2 DDS 版 Unitree Guide，详见 `src/unitree_guide/README.md` |
 
 ## 说明
 

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>unitree_guide</name>
+  <version>0.1.0</version>
+  <description>Unitree Guide Go2 controller using ROS 2 and Unitree SDK2 DDS.</description>
+  <maintainer email="laikago@unitree.cc">unitree</maintainer>
+  <license>BSD-3-Clause</license>
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <depend>rclcpp</depend>
+  <depend>eigen</depend>
+  <export><build_type>ament_cmake</build_type></export>
+</package>
