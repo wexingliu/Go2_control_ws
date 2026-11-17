@@ -102,7 +102,7 @@ def generate_launch_description():
             ),
             DeclareLaunchArgument(
                 "sdk_library_path",
-                default_value=os.path.join(get_package_prefix("hardware_unitree_mujoco"), "lib"),
+                default_value=os.path.join(get_package_prefix("hardware_unitree"), "lib"),
                 description="Directory containing libddsc.so and libddscxx.so "
                 "(defaults to the hardware plugin's own lib dir, which ships them)",
             ),

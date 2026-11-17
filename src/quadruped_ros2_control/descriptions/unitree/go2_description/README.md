@@ -30,10 +30,10 @@ ros2 launch go2_description visualize.launch.py
 ## 3. Launch ROS2 Control
 
 ### 3.1 Mujoco Simulator or Real Go2 Robot
-> **About Real Go2 Robot**: To switch the Unitree Hardware Interface to the real robot, you need to change the config at `xacro/ros2_control.xacro`. 
-> * Config guide could be found at [UnitreeHardwareInterface](../../../hardwares/hardware_unitree_mujoco)
+> **About Real Go2 Robot**: Use `real_robot.launch.py` and set `network_interface` to the robot Ethernet interface.
+> * Config guide could be found at [UnitreeHardwareInterface](../../../hardwares/hardware_unitree)
 > * Don't forget to disable the **Official Locomotion Controller** in the robot before the test
-> * To use Unitree's remote controller, see [UnitreeJoystickInput](../../../commands/unitree_joystick_input) 
+> * To use Unitree's remote controller, see [UnitreeJoystickInput](../../../commands/unitree_joystick_input)
 > * Always test on simulator first before deploying to the real robot.
 * Unitree Guide Controller
   ```bash
@@ -50,29 +50,3 @@ ros2 launch go2_description visualize.launch.py
   source ~/ros2_ws/install/setup.bash
   ros2 launch rl_quadruped_controller mujoco.launch.py
   ```
-
-### 3.2 Gazebo Classic 11 (ROS2 Humble)
-* Unitree Guide Controller
-  ```bash
-  source ~/ros2_ws/install/setup.bash
-  ros2 launch unitree_guide_controller gazebo_classic.launch.py
-  ```
-
-### 3.3 Gazebo Harmonic (ROS2 Jazzy)
-
-* Unitree Guide Controller
-  ```bash
-  source ~/ros2_ws/install/setup.bash
-  ros2 launch unitree_guide_controller gazebo.launch.py
-  ```
-* OCS2 Quadruped Controller
-  ```bash
-  source ~/ros2_ws/install/setup.bash
-  ros2 launch ocs2_quadruped_controller gazebo.launch.py
-  ```
-* RL Quadruped Controller
-  ```bash
-  source ~/ros2_ws/install/setup.bash
-  ros2 launch go2_description gazebo_rl_control.launch.py
-  ```
-

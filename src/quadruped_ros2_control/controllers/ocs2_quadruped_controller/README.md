@@ -67,10 +67,6 @@ supported robot description:
 
 * Unitree
     * go2_description
-    * go1_description
-    * a1_description
-    * aliengo_description
-    * b2_description
 * Xiaomi
     * cyberdog_description
 * DeepRobotics
@@ -110,10 +106,4 @@ To config the path for the cppAD shared library, you can modify the `modelFolder
 ```bash
 source ~/ros2_ws/install/setup.bash
 ros2 launch ocs2_quadruped_controller mujoco.launch.py pkg_description:=go2_description
-```
-
-#### Gazebo Launch
-```bash
-source ~/ros2_ws/install/setup.bash
-ros2 launch ocs2_quadruped_controller gazebo.launch.py pkg_description:=go2_description
 ```

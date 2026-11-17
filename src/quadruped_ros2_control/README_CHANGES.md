@@ -2,14 +2,14 @@
 
 上游基线：`quadruped_ros2_control` @ a808acb。
 
-## 1. hardware_unitree_mujoco（硬件接口）
+## 1. hardware_unitree（硬件接口）
 
 - `CMakeLists.txt`
   - Unitree SDK2 改为**工作区内查找**：`thirdparty/unitree_sdk2/`，强制 `unitree_sdk2_DIR` 指向它；
     若要用系统 SDK，配置 `-DUNITREE_SDK2_PREFER_SYSTEM=ON`。
   - 运行库 `libddsc.so` / `libddscxx.so` 以 `libddsc.so.0` / `libddscxx.so.0` 装进插件自己的 `lib/`，
     并设 `RUNPATH=$ORIGIN`，运行时不再需要 `LD_LIBRARY_PATH`。
-- `include/hardware_unitree_mujoco/HardwareUnitree.h`
+- `include/hardware_unitree/HardwareUnitree.h`
   - 清理临时 UDP 传输桩代码，恢复为纯 DDS 实现。
 
 ## 2. descriptions/unitree/go2_description（模型与 ros2_control 接口）
@@ -19,7 +19,7 @@
 ## 3. controllers/unitree_guide_controller（控制器与真机启动）
 
 - `launch/real_robot.launch.py`：新增真机启动文件；`sdk_library_path` 默认值改为
-  `get_package_prefix("hardware_unitree_mujoco")/lib`（插件自带 DDS 运行库），不再指向 `/tmp`。
+  `get_package_prefix("hardware_unitree")/lib`（插件自带 DDS 运行库），不再指向 `/tmp`。
 - `config/go2_real_robot.yaml`：Go2 真机 FSM 参数（`down_pos` 收腿位、关节顺序 FR/FL/RR/RL 等）。
 
 ## 已验证的真机链路

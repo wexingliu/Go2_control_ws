@@ -29,4 +29,3 @@ colcon build --packages-up-to leg_pd_controller
 ```
 
 ## 3. Run
-* [Go1/A1 in gazebo simulation](../../descriptions/quadruped_gazebo)

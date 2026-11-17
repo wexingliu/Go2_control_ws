@@ -5,7 +5,7 @@ from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, OpaqueFunction, IncludeLaunchDescription, RegisterEventHandler
 from launch.event_handlers import OnProcessExit
-from launch.substitutions import PathJoinSubstitution
+from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 
@@ -15,7 +15,10 @@ def launch_setup(context, *args, **kwargs):
     pkg_path = os.path.join(get_package_share_directory(package_description))
 
     xacro_file = os.path.join(pkg_path, 'xacro', 'robot.xacro')
-    robot_description = xacro.process_file(xacro_file).toxml()
+    robot_description = xacro.process_file(xacro_file, mappings={
+        "domain": LaunchConfiguration("domain").perform(context),
+        "network_interface": LaunchConfiguration("network_interface").perform(context),
+    }).toxml()
 
     robot_controllers = PathJoinSubstitution(
         [
@@ -108,5 +111,7 @@ def generate_launch_description():
 
     return LaunchDescription([
         pkg_description,
+        DeclareLaunchArgument('domain', default_value='1', description='Unitree DDS domain ID'),
+        DeclareLaunchArgument('network_interface', default_value='lo', description='MuJoCo DDS network interface'),
         OpaqueFunction(function=launch_setup),
     ])
