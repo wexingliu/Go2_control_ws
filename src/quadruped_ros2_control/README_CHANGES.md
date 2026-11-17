@@ -5,7 +5,7 @@
 ## 1. hardware_unitree_mujoco（硬件接口）
 
 - `CMakeLists.txt`
-  - Unitree SDK2 改为**包内查找**：`thirdparty/unitree_sdk2/`，强制 `unitree_sdk2_DIR` 指向它；
+  - Unitree SDK2 改为**工作区内查找**：`thirdparty/unitree_sdk2/`，强制 `unitree_sdk2_DIR` 指向它；
     若要用系统 SDK，配置 `-DUNITREE_SDK2_PREFER_SYSTEM=ON`。
   - 运行库 `libddsc.so` / `libddscxx.so` 以 `libddsc.so.0` / `libddscxx.so.0` 装进插件自己的 `lib/`，
     并设 `RUNPATH=$ORIGIN`，运行时不再需要 `LD_LIBRARY_PATH`。

@@ -1,6 +1,6 @@
 # Go2_control_ws
 
-Go2 四足 ROS 2 控制工作区，只包含 `src/quadruped_ros2_control/`。
+Go2 四足 ROS 2 控制工作区。源码位于 `src/quadruped_ros2_control/`，Unitree SDK2 位于 `thirdparty/unitree_sdk2/`。
 
 ## 分支
 
@@ -12,6 +12,6 @@ Go2 四足 ROS 2 控制工作区，只包含 `src/quadruped_ros2_control/`。
 ## 说明
 
 - 为控制仓库体积，剔除了 4 个 >20MB 的**非 Go2 机型**网格文件（go1/b2 的 `trunk.dae`）；Go2 自身网格保留。
-- `main` 不含 `hardwares/hardware_unitree_mujoco/thirdparty/unitree_sdk2/`（44MB 的 Unitree SDK2 预编译产物），
-  用 `scripts/fetch_unitree_sdk2.sh` 还原。
+- `main` 包含 44MB 的 Unitree SDK2 预编译产物，无需单独下载。需要替换为本机 SDK 时，可用
+  `scripts/fetch_unitree_sdk2.sh`，默认从 `~/dog/unitree_sdk2/install` 复制到工作区根目录的 `thirdparty/unitree_sdk2/`。
 - `main` 的改动清单见 `src/quadruped_ros2_control/README_CHANGES.md`。

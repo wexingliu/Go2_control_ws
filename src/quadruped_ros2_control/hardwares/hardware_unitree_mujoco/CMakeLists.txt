@@ -19,11 +19,13 @@ set(THIS_PACKAGE_INCLUDE_DEPENDS
 find_package(ament_cmake REQUIRED)
 find_package(backward_ros REQUIRED)
 
-# Unitree SDK2 is vendored inside this package (thirdparty/unitree_sdk2) so the
-# workspace builds and runs with no external SDK install, no /tmp paths, and no
-# extra CMAKE_PREFIX_PATH. To use a system SDK instead, pass
+# Unitree SDK2 is vendored at the workspace root (thirdparty/unitree_sdk2) so
+# the workspace builds and runs with no external SDK install, no /tmp paths,
+# and no extra CMAKE_PREFIX_PATH. To use a system SDK instead, pass
 #   -DUNITREE_SDK2_PREFER_SYSTEM=ON
-set(UNITREE_SDK2_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/unitree_sdk2")
+get_filename_component(UNITREE_SDK2_ROOT
+        "${CMAKE_CURRENT_SOURCE_DIR}/../../../../thirdparty/unitree_sdk2"
+        ABSOLUTE)
 option(UNITREE_SDK2_PREFER_SYSTEM "Use a system-installed Unitree SDK2 if found" OFF)
 if (NOT UNITREE_SDK2_PREFER_SYSTEM)
     list(PREPEND CMAKE_PREFIX_PATH "${UNITREE_SDK2_ROOT}")
