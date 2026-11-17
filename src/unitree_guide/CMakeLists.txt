@@ -12,7 +12,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(Threads REQUIRED)
-set(UNITREE_SDK2_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/../../thirdparty/unitree_sdk2" CACHE PATH "Unitree SDK2 installation prefix")
+set(UNITREE_SDK2_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/../../../Go2_control_ws/thirdparty/unitree_sdk2" CACHE PATH "Unitree SDK2 installation prefix")
 find_package(unitree_sdk2 REQUIRED CONFIG PATHS "${UNITREE_SDK2_ROOT}/lib/cmake/unitree_sdk2" NO_DEFAULT_PATH)
 
 file(GLOB_RECURSE CONTROLLER_SOURCES CONFIGURE_DEPENDS

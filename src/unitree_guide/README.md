@@ -6,7 +6,7 @@ Go2 的腿长及关节位置来自相邻 `Go2_control_ws` 的机器人描述；�
 
 ## 构建
 
-需要 ROS 2 Jazzy、colcon、Eigen3 和 Unitree SDK2。默认使用本工作区 `thirdparty/unitree_sdk2` 的 SDK 和 DDS 库；可用 `-DUNITREE_SDK2_ROOT=/path/to/sdk/install` 指定其他安装目录。以下命令在工作区根目录执行：
+需要 ROS 2 Jazzy、colcon、Eigen3 和 Unitree SDK2。默认使用相邻 `Go2_control_ws/thirdparty/unitree_sdk2` 的 SDK 和 DDS 库；可用 `-DUNITREE_SDK2_ROOT=/path/to/sdk/install` 指定其他安装目录。以下命令在工作区根目录执行：
 
 ```bash
 source /opt/ros/jazzy/setup.bash

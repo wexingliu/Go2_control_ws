@@ -6,7 +6,3 @@ __pycache__/
 .vscode/
 .idea/
 .DS_Store
-src/quadruped_ros2_control/descriptions/unitree/b2_description/meshes/trunk.dae
-src/quadruped_ros2_control/descriptions/unitree/b2_description/meshes/trunk1.dae
-src/quadruped_ros2_control/descriptions/unitree/b2_description/meshes/trunk2.dae
-src/quadruped_ros2_control/descriptions/unitree/go1_description/meshes/trunk.dae
