@@ -1,0 +1,10 @@
+build/
+install/
+log/
+__pycache__/
+*.pyc
+*.pyo
+.vscode/
+.idea/
+.DS_Store
+src/quadruped_ros2_control/hardwares/hardware_unitree_mujoco/thirdparty/
