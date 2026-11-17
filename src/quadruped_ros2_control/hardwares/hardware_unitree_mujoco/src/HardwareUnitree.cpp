@@ -4,6 +4,7 @@
 
 #include "hardware_unitree_mujoco/HardwareUnitree.h"
 
+#include <chrono>
 #include <rclcpp/logger.hpp>
 #include <rclcpp/logging.hpp>
 
@@ -228,6 +229,16 @@ return_type HardwareUnitree::read(const rclcpp::Time& /*time*/, const rclcpp::Du
 
 return_type HardwareUnitree::write(const rclcpp::Time& /*time*/, const rclcpp::Duration& /*period*/)
 {
+    const auto now_ns = std::chrono::duration_cast<std::chrono::nanoseconds>(
+        std::chrono::steady_clock::now().time_since_epoch()).count();
+    const auto last_rx_ns = low_state_last_rx_ns_.load(std::memory_order_acquire);
+    if (last_rx_ns == 0 || now_ns - last_rx_ns > 100'000'000)
+    {
+        RCLCPP_WARN_ONCE(rclcpp::get_logger("unitree_hardware"),
+                         "Skipping rt/lowcmd: no fresh rt/lowstate received in the last 100 ms");
+        return return_type::OK;
+    }
+
     // send command
     for (int i(0); i < 12; ++i)
     {
@@ -267,6 +278,9 @@ void HardwareUnitree::initLowCmd()
 void HardwareUnitree::lowStateMessageHandle(const void* messages)
 {
     low_state_ = *static_cast<const unitree_go::msg::dds_::LowState_*>(messages);
+    const auto now_ns = std::chrono::duration_cast<std::chrono::nanoseconds>(
+        std::chrono::steady_clock::now().time_since_epoch()).count();
+    low_state_last_rx_ns_.store(now_ns, std::memory_order_release);
 }
 
 void HardwareUnitree::highStateMessageHandle(const void* messages)

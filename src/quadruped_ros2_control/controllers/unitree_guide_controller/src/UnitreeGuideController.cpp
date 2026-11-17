@@ -52,6 +52,11 @@ namespace unitree_guide_controller
             conf.names.push_back(imu_name_ + "/" += interface_type);
         }
 
+        RCLCPP_INFO(get_node()->get_logger(),
+                    "Requesting state interfaces: joints=%zu joint_types=%zu imu=%zu total=%zu",
+                    joint_names_.size(), state_interface_types_.size(), imu_interface_types_.size(),
+                    conf.names.size());
+
         return conf;
     }
 
@@ -125,6 +130,10 @@ namespace unitree_guide_controller
 
             get_node()->get_parameter("update_rate", ctrl_interfaces_.frequency_);
             RCLCPP_INFO(get_node()->get_logger(), "Controller Manager Update Rate: %d Hz", ctrl_interfaces_.frequency_);
+            RCLCPP_INFO(get_node()->get_logger(),
+                        "Loaded Go2 config: joints=%zu command_types=%zu state_types=%zu feet=%zu imu_types=%zu",
+                        joint_names_.size(), command_interface_types_.size(), state_interface_types_.size(),
+                        feet_names_.size(), imu_interface_types_.size());
 
             ctrl_component_.estimator_ = std::make_shared<Estimator>(ctrl_interfaces_, ctrl_component_);
         }
@@ -196,6 +205,18 @@ namespace unitree_guide_controller
             {
                 state_interface_map_[interface.get_interface_name()]->push_back(interface);
             }
+        }
+
+        const auto position_count = ctrl_interfaces_.joint_position_state_interface_.size();
+        const auto velocity_count = ctrl_interfaces_.joint_velocity_state_interface_.size();
+        const auto imu_count = ctrl_interfaces_.imu_state_interface_.size();
+        RCLCPP_INFO(get_node()->get_logger(), "Claimed state interfaces: position=%zu velocity=%zu imu=%zu",
+                    position_count, velocity_count, imu_count);
+        if (position_count != 12 || velocity_count != 12 || imu_count != 10)
+        {
+            RCLCPP_ERROR(get_node()->get_logger(),
+                         "Cannot activate: Go2 guide controller requires 12 position, 12 velocity, and 10 IMU state interfaces");
+            return CallbackReturn::ERROR;
         }
 
         // Create FSM List

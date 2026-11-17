@@ -81,6 +81,11 @@ install(
         DESTINATION share/${PROJECT_NAME}/
 )
 
+install(
+        DIRECTORY config
+        DESTINATION share/${PROJECT_NAME}/
+)
+
 ament_export_dependencies(${CONTROLLER_INCLUDE_DEPENDS})
 ament_export_targets(export_${PROJECT_NAME} HAS_LIBRARY_TARGET)
 

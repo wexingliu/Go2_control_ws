@@ -18,6 +18,17 @@ set(THIS_PACKAGE_INCLUDE_DEPENDS
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(backward_ros REQUIRED)
+
+# Unitree SDK2 is vendored inside this package (thirdparty/unitree_sdk2) so the
+# workspace builds and runs with no external SDK install, no /tmp paths, and no
+# extra CMAKE_PREFIX_PATH. To use a system SDK instead, pass
+#   -DUNITREE_SDK2_PREFER_SYSTEM=ON
+set(UNITREE_SDK2_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/unitree_sdk2")
+option(UNITREE_SDK2_PREFER_SYSTEM "Use a system-installed Unitree SDK2 if found" OFF)
+if (NOT UNITREE_SDK2_PREFER_SYSTEM)
+    list(PREPEND CMAKE_PREFIX_PATH "${UNITREE_SDK2_ROOT}")
+    set(unitree_sdk2_DIR "${UNITREE_SDK2_ROOT}/lib/cmake/unitree_sdk2" CACHE PATH "" FORCE)
+endif ()
 find_package(unitree_sdk2 REQUIRED)
 
 foreach (Dependency IN ITEMS ${THIS_PACKAGE_INCLUDE_DEPENDS})
@@ -40,6 +51,18 @@ target_include_directories(${PROJECT_NAME} PUBLIC
         PRIVATE src
 )
 target_link_libraries(${PROJECT_NAME} unitree_sdk2)
+
+# The SDK2 static library needs libddsc/libddscxx at run time. Ship the two
+# shared objects next to the plugin and resolve them through $ORIGIN, so the
+# plugin loads with no LD_LIBRARY_PATH.
+# the .so files are the real objects; the .so.0 entries in the SDK tree are
+# symlinks, and install(FILES) would copy them as broken links
+set(UNITREE_SDK2_RUNTIME_LIBS
+        "${UNITREE_SDK2_ROOT}/lib/libddsc.so"
+        "${UNITREE_SDK2_ROOT}/lib/libddscxx.so")
+set_target_properties(${PROJECT_NAME} PROPERTIES
+        BUILD_WITH_INSTALL_RPATH TRUE
+        INSTALL_RPATH "$ORIGIN")
 ament_target_dependencies(
         ${PROJECT_NAME}
         ${THIS_PACKAGE_INCLUDE_DEPENDS}
@@ -51,6 +74,10 @@ install(
         DIRECTORY include/
         DESTINATION include/${PROJECT_NAME}
 )
+
+# install under the SONAME the plugin actually links against, as real files
+install(FILES "${UNITREE_SDK2_ROOT}/lib/libddsc.so" DESTINATION lib RENAME libddsc.so.0)
+install(FILES "${UNITREE_SDK2_ROOT}/lib/libddscxx.so" DESTINATION lib RENAME libddscxx.so.0)
 
 install(
         TARGETS ${PROJECT_NAME}

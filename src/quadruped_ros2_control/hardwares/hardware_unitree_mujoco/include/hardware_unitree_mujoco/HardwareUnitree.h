@@ -6,6 +6,7 @@
 #ifndef HARDWAREUNITREE_H
 #define HARDWAREUNITREE_H
 
+#include <atomic>
 #include "hardware_interface/system_interface.hpp"
 #include <unitree/idl/go2/WirelessController_.hpp>
 #include <unitree/idl/go2/LowState_.hpp>
@@ -58,7 +59,9 @@ protected:
 
     unitree_go::msg::dds_::LowCmd_ low_cmd_{}; // default init
     unitree_go::msg::dds_::LowState_ low_state_{}; // default init
+    std::atomic<int64_t> low_state_last_rx_ns_{0};
     unitree_go::msg::dds_::SportModeState_ high_state_{}; // default init
+
 
     std::string network_interface_ = "lo";
     int domain_ = 1;

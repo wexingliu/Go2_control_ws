@@ -59,3 +59,21 @@ ros2 launch unitree_guide_controller gazebo_classic.launch.py pkg_description:=g
 source ~/ros2_ws/install/setup.bash
 ros2 launch unitree_guide_controller gazebo.launch.py pkg_description:=go2_description
 ```
+
+### 3.4 Go2 real robot
+
+Connect the computer to the robot over Ethernet. The real robot launch defaults to DDS domain `0`, interface `enp5s0`, and the SDK2 libraries installed at `/tmp/quadruped_unitree_sdk2_install/lib`.
+
+```bash
+source /opt/ros/humble/setup.bash
+source ~/dog/quadruped_ros2_control/install/setup.bash
+ros2 launch unitree_guide_controller real_robot.launch.py
+```
+
+The launch starts the hardware interface, state broadcasters, guide controller, then keyboard input. Press `2` once to begin the fixed-down transition, then press `2` again after about 1.5 seconds to enter fixed stand. Press `1` to return to passive mode. Keep the robot supported while first checking the controller and joint feedback.
+
+Override the DDS settings or SDK library directory when needed:
+
+```bash
+ros2 launch unitree_guide_controller real_robot.launch.py domain:=0 network_interface:=enp5s0 sdk_library_path:=/tmp/quadruped_unitree_sdk2_install/lib
+```

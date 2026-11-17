@@ -5,8 +5,8 @@
 
 		<hardware>
 			<plugin>hardware_unitree_mujoco/HardwareUnitree</plugin>
-<!--			<param name="domain">0</param>-->
-<!--			<param name="network_interface">enp46s0</param>-->
+			<param name="domain">$(arg domain)</param>
+			<param name="network_interface">$(arg network_interface)</param>
 <!--			<param name="show_foot_force">true</param>-->
 		</hardware>
 
